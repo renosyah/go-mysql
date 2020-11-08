@@ -16,10 +16,11 @@ new Vue({
             query : {
                 search_by: "name",
                 search_value: "",
-                order_by: "name",
+                order_by: "id",
                 order_dir: "asc",
                 offset: 0,
-                limit: 5
+                limit: 5,
+                page : 1,
             },
             is_online : true,
             is_loading : false,

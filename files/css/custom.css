@@ -1,6 +1,6 @@
-#bg_pc {
+#bg {
     position: fixed;
-    background-image: url('/img/bg.jpg') !important;
+    background-color: #ffbb6d;
     background-clip: border-box;
     background-repeat: no-repeat;
     background-size: cover;
@@ -11,18 +11,18 @@
     right: 0; 
 }
 
-#bg_mobile {
+#ghoper {
     position: fixed;
-    background-image: url('/img/bg_mobile.jpg') !important;
+    background-image: url('/img/small_ghoper.png');
+    background-position: right bottom;
     background-clip: border-box;
     background-repeat: no-repeat;
-    background-size: cover;
     z-index: -1;
     bottom: 0;
     top: 0;
     left: 0;
-    right: 0;            
-}
+    right: 0; 
+ }
 
 .preloader-background {
     display: flex;

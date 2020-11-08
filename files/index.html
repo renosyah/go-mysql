@@ -22,8 +22,8 @@
     <div id="app"> 
 
         <!---------BACKGROUND---------->
-        <div id="bg_pc" class="hide-on-small-only"></div>
-        <div id="bg_mobile" class="hide-on-med-and-up"></div>
+        <div id="bg"></div>
+        <div id="ghoper"></div>
         
         <!---------LOADING---------->
         <div class="preloader-background" v-show="false">
@@ -55,7 +55,7 @@
         <div v-show="getPageName == 'main-page'">
  
             <h3 style="margin-left:auto;margin-right:auto;text-align:center">Data User</h3>
-            <br /><br />
+            
 
             <div class="container">
                 <div class="row">
@@ -65,9 +65,19 @@
                             <b><span> + </span></b>    
                         </a>
                         <table v-show="users.length == 0">
+                          <thead>
+                                <tr>
+                                    <th>No</th>
+                                    <th>Id</th>
+                                    <th>Name</th>
+                                    <th>Email</th>
+                                    <th> </th>
+                                    <th> </th>
+                                </tr>
+                            </thead>
                             <tbody>
                                 <tr>
-                                    <th class="center">No Data User Found!</th>
+                                    <th colspan=6 class="center">No Data User Found!</th>
                                 </tr>
                             </tbody>
                         </table>
@@ -75,6 +85,7 @@
                         <table v-show="users.length > 0">
                             <thead>
                                 <tr>
+                                    <th>No</th>
                                     <th>Id</th>
                                     <th>Name</th>
                                     <th>Email</th>
@@ -84,18 +95,19 @@
                             </thead>
 
                             <tbody>
-                                <tr v-for="user in users" v-bind:key="user.id">
+                                <tr v-for="(user,i) in users" v-bind:key="user.id">
+                                    <th>{{ i + 1 + query.offset }}</th>
                                     <th>{{ user.id }}</th>
                                     <th>{{ user.name }}</th>
                                     <th>{{ user.email }}</th>
                                     <th>
                                         <a class="col s12 waves-effect waves-light btn orange white-text modal-trigger" style="text-transform:none;" data-target="modal-edit-user" @click="user_edit = user">
-                                            <b><span>Edit</span></b>    
+                                            <i class="material-icons">edit</i>   
                                         </a>
                                     </th>
                                     <th>
                                         <a class="col s12 waves-effect waves-light btn red white-text" style="text-transform:none;" @click="deleteUser(user.id)" >
-                                            <b><span>Delete</span></b>    
+                                            <i class="material-icons">delete</i>  
                                         </a>
                                     </th>
                                 </tr>
@@ -104,19 +116,20 @@
 
                         <br /><br />
 
-                        <a class="left waves-effect waves-light btn orange white-text" style="text-transform:none;" v-show="query.offset > 0" @click="query.offset -= (query.offset - query.limit) < 0 ? 0 : query.limit;listUser()">
-                            <b><span>&nbsp;&nbsp; < &nbsp;&nbsp;</span></b>    
-                        </a>
-                        &nbsp;&nbsp;
-                        <a class="right waves-effect waves-light btn orange white-text" style="text-transform:none;" v-show="query.offset >= 0 && users.length > 0" @click="query.offset += query.limit;listUser()">
-                            <b><span>&nbsp;&nbsp; > &nbsp;&nbsp;</span></b>    
-                        </a>                       
-                        
+                        <div class="center container">
+                            <a class="left waves-effect waves-light btn orange white-text" style="text-transform:none;" v-show="query.offset > 0" @click="query.offset -= (query.offset - query.limit) < 0 ? 0 : query.limit;listUser();query.page--">
+                                <b><span>&nbsp;&nbsp; < &nbsp;&nbsp;</span></b>    
+                            </a>
+                            <b><span> {{ query.page }} </span></b>  
+                            <a class="right waves-effect waves-light btn orange white-text" style="text-transform:none;" v-show="query.offset >= 0 && users.length > 0" @click="query.offset += query.limit;listUser();query.page++">
+                                <b><span>&nbsp;&nbsp; > &nbsp;&nbsp;</span></b>    
+                            </a>                          
+                        </div>
                     </div>
                     <div class="col m2 l2"></div>
                 </div>
             </div>
-            
+
         </div>
 
         <!---------MODAL ADD USER---------->
@@ -131,8 +144,8 @@
                 <div class="card-content">
             <div class="container">
                 <div class="row">
-                    <div class="col m2 l3"></div>
-                    <div class="col s12 m8 l6">
+                    <div class="col m2 l2"></div>
+                    <div class="col s12 m8 l8">
                         <div class="input-field">
                             <input id="icon_prefix" type="text" v-model="user.name" :placeholder="user.name">
                             <label for="icon_prefix">Name</label>
@@ -142,7 +155,7 @@
                             <label for="icon_email">Email</label>
                         </div>
                     </div>
-                    <div class="col m2 l3"></div>
+                    <div class="col m2 l2"></div>
                 </div>
             </div>
                 </div>
@@ -175,8 +188,8 @@
                 <div class="card-content">
             <div class="container">
                 <div class="row">
-                    <div class="col m2 l3"></div>
-                    <div class="col s12 m8 l6">
+                    <div class="col m2 l2"></div>
+                    <div class="col s12 m8 l8">
                         <div class="input-field">
                             <input id="icon_prefix" type="text" v-model="user_edit.name" :placeholder="user_edit.name">
                             <label for="icon_prefix">Edit Name</label>
@@ -186,7 +199,7 @@
                             <label for="icon_email">Edit Email</label>
                         </div>
                     </div>
-                    <div class="col m2 l3"></div>
+                    <div class="col m2 l2"></div>
                 </div>
             </div>
                 </div>
