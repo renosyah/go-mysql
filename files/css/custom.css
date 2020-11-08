@@ -1,0 +1,50 @@
+#bg_pc {
+    position: fixed;
+    background-image: url('/img/bg.jpg') !important;
+    background-clip: border-box;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0; 
+}
+
+#bg_mobile {
+    position: fixed;
+    background-image: url('/img/bg_mobile.jpg') !important;
+    background-clip: border-box;
+    background-repeat: no-repeat;
+    background-size: cover;
+    z-index: -1;
+    bottom: 0;
+    top: 0;
+    left: 0;
+    right: 0;            
+}
+
+.preloader-background {
+    display: flex;
+	align-items: center;
+	justify-content: center;
+	background-color: #ffffff;
+    opacity:1;
+	position: fixed;
+	z-index: 100;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;	
+}
+
+.input-field :focus + label {
+    color:orange !important;
+}
+
+.input-field :focus {
+    border-bottom: 1px solid orange !important;
+    box-shadow: 0 1px 0 0 orange !important;
+}
+
+ 
