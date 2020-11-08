@@ -14,6 +14,8 @@
 #ghoper {
     position: fixed;
     background-image: url('/img/small_ghoper.png');
+    opacity: 0.4;
+    filter: grayscale(100%);
     background-position: right bottom;
     background-clip: border-box;
     background-repeat: no-repeat;
