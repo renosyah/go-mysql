@@ -3,18 +3,19 @@ package model
 import (
 	"context"
 	"database/sql"
+	"errors"
 	"fmt"
 )
 
 type (
 	User struct {
-		ID    int    `json:"id"`
+		ID    int64  `json:"id"`
 		Name  string `json:"name"`
 		Email string `json:"email"`
 	}
 
 	UserResponse struct {
-		ID    int    `json:"id"`
+		ID    int64  `json:"id"`
 		Name  string `json:"name"`
 		Email string `json:"email"`
 	}
@@ -39,7 +40,12 @@ func (u *User) Response() UserResponse {
 
 func (u *User) Add(ctx context.Context, db *sql.DB) error {
 	query := `INSERT INTO user (name,email) VALUES (?,?)`
-	_, err := db.ExecContext(ctx, fmt.Sprintf(query), u.Name, u.Email)
+	result, err := db.ExecContext(ctx, fmt.Sprintf(query), u.Name, u.Email)
+	if err != nil {
+		return err
+	}
+
+	u.ID, err = result.LastInsertId()
 	if err != nil {
 		return err
 	}
@@ -89,9 +95,18 @@ func (u *User) One(ctx context.Context, db *sql.DB) (User, error) {
 func (u *User) Update(ctx context.Context, db *sql.DB) error {
 
 	query := `UPDATE user SET name = ?, email = ? WHERE id = ?`
-	_, err := db.ExecContext(ctx, fmt.Sprintf(query), u.Name, u.Email, u.ID)
+	result, err := db.ExecContext(ctx, fmt.Sprintf(query), u.Name, u.Email, u.ID)
 	if err != nil {
 		return err
+	}
+
+	num, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if num == 0 {
+		return errors.New("no update is performed!")
 	}
 
 	return nil
@@ -100,9 +115,18 @@ func (u *User) Update(ctx context.Context, db *sql.DB) error {
 func (u *User) Delete(ctx context.Context, db *sql.DB) error {
 
 	query := `DELETE FROM user WHERE id = ?`
-	_, err := db.ExecContext(ctx, fmt.Sprintf(query), u.ID)
+	result, err := db.ExecContext(ctx, fmt.Sprintf(query), u.ID)
 	if err != nil {
 		return err
+	}
+
+	num, err := result.RowsAffected()
+	if err != nil {
+		return err
+	}
+
+	if num == 0 {
+		return errors.New("no delete is performed!")
 	}
 
 	return nil

@@ -41,7 +41,7 @@ func HandlerOneUser(w http.ResponseWriter, r *http.Request) (interface{}, *api.E
 	ctx := r.Context()
 	vars := mux.Vars(r)
 
-	id, err := strconv.Atoi(vars["id"])
+	id, err := strconv.ParseInt(vars["id"], 10, 64)
 	if err != nil {
 		return nil, api.NewError(errors.Wrap(err, "User/detail"),
 			http.StatusText(http.StatusNotFound), http.StatusNotFound)
@@ -56,7 +56,7 @@ func HandlerUpdateUser(w http.ResponseWriter, r *http.Request) (interface{}, *ap
 
 	var param model.User
 
-	id, err := strconv.Atoi(vars["id"])
+	id, err := strconv.ParseInt(vars["id"], 10, 64)
 	if err != nil {
 		return nil, api.NewError(errors.Wrap(err, "User/update"),
 			http.StatusText(http.StatusNotFound), http.StatusNotFound)
@@ -77,7 +77,7 @@ func HandlerDeleteUser(w http.ResponseWriter, r *http.Request) (interface{}, *ap
 	ctx := r.Context()
 	vars := mux.Vars(r)
 
-	id, err := strconv.Atoi(vars["id"])
+	id, err := strconv.ParseInt(vars["id"], 10, 64)
 	if err != nil {
 		return nil, api.NewError(errors.Wrap(err, "User/delete"),
 			http.StatusText(http.StatusNotFound), http.StatusNotFound)
